@@ -1,0 +1,159 @@
+plugins {
+    id 'java'
+    //    Spring Cloud Releases and Compatibility - https://spring.io/projects/spring-cloud/#overview
+    //    Gradle Dependency Management Plugin 文档 - https://github.com/spring-gradle-plugins/dependency-management-plugin
+    id 'org.springframework.boot' version '3.3.5'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.test'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+// tencentcloud
+//
+// repositories {
+//     mavenCentral({ url 'https://maven.aliyun.com/repository/central' })
+// }
+//
+// #16 [builder 9/9] RUN ./gradlew clean build -x test
+// #16 0.586 Downloading https://services.gradle.org/distributions/gradle-8.10.2-bin.zip
+// #16 2.859
+// #16 2.859 Exception in thread "main" java.net.SocketException: Connection reset
+repositories {
+    maven {
+        url 'https://mirrors.cloud.tencent.com/nexus/repository/maven-public/'
+    }
+    // 备用源，可选
+    maven {
+        url 'https://maven.aliyun.com/repository/central'
+    }
+    mavenCentral() // 最后兜底
+}
+
+// 重要：Spring Cloud 版本管理
+ext {
+    set('springCloudVersion', "2022.0.4")
+    set('springCloudAlibabaVersion', "2022.0.0.0")
+}
+
+// Spring Cloud 推荐通过 BOM（Bill of Materials）统一管理依赖版本。如果你只写了 starter 名，没有 BOM，也找不到可解析的版本。
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:2023.0.5"
+        mavenBom "com.alibaba.cloud:spring-cloud-alibaba-dependencies:${springCloudAlibabaVersion}"
+    }
+}
+
+
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.3' // mybatis for database access
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'com.google.cloud:google-cloud-storage:2.23.0' // Storage for listing pictures
+    implementation 'com.google.maps:google-maps-services:2.2.0' // Location lookup, from address to lat/lng
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5' // JWT token generation
+    implementation 'org.hibernate.orm:hibernate-spatial:6.1.7.Final' // Hibernate spatial for location search
+    implementation 'org.locationtech.jts:jts:1.19.0' // Geometry data type support (e.g. Point, Polygon)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa' // JPA for database access
+
+    implementation 'org.springframework.boot:spring-boot-starter-web' // Spring Web for REST API
+    implementation 'org.springframework.boot:spring-boot-starter-security' // Spring Security for authentication
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign' // api call
+    implementation 'org.springframework.security:spring-security-oauth2-client'  // get token
+
+    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5' // JWT
+    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5' // JWT
+    runtimeOnly 'org.postgresql:postgresql' // PostgreSQL Driver
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    // swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.1.0'
+
+    implementation 'dev.langchain4j:langchain4j:0.24.0'
+    implementation 'dev.langchain4j:langchain4j-open-ai:0.24.0'
+
+    // implementation 'dev.langchain4j:langchain4j-document-parser:0.24.0'  // 文档解析
+    implementation 'commons-io:commons-io:2.11.0'  // 文件处理工具
+
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'  // 用于WebClient
+    implementation 'com.alibaba.fastjson2:fastjson2:2.0.42'
+
+    // Redis 依赖
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // 阿里云短信平台
+    implementation 'com.aliyun:dysmsapi20170525:2.0.9'
+
+    // tencent cloud storage
+    implementation 'com.qcloud:cos_api:5.6.227'
+
+    // JavaCV 是一个 Java 语言的计算机视觉库，封装了 OpenCV、FFmpeg 等常用的 C/C++ 库，支持图像和视频处理、机器视觉与多媒体功能。
+    // 使用场景示例：图像/视频采集与处理; 多媒体数据分析; 机器视觉开发;
+    implementation 'org.bytedeco:javacv-platform:1.5.5'
+
+    // Kafka 依赖
+    implementation 'org.springframework.kafka:spring-kafka'
+
+
+    // Spring Cloud Gateway
+    // 动态路由: Gateway 支持动态路由配置
+//    implementation 'org.springframework.cloud:spring-cloud-starter-gateway'
+
+    // Nacos 服务发现
+    // 服务发现自动化: Nacos 实现服务自动注册与发现
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery'
+    // 服务注册与发现（选择一种）
+    // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Nacos 配置中心
+    // 配置中心: Nacos 提供配置集中管理与动态推送
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config'
+    // 配置中心（选择一种）
+    // implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
+    // 配置处理器
+    implementation 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // 负载均衡
+    implementation 'org.springframework.cloud:spring-cloud-starter-loadbalancer'
+
+    // 断路器Hystrix（可选）
+    // Netflix Hystrix 在 Spring Cloud 2020.0.0 (Ilford) 版本中被移除，因为 Netflix 官方已经停止维护 Hystrix
+    // Spring Cloud 推荐使用 Resilience4j 替代 Hystrix
+    // 如果你的项目必须使用 Hystrix，需要降级到支持的版本
+    // implementation 'org.springframework.cloud:spring-cloud-starter-netflix-hystrix'
+    // 断路器（选择一种）
+    // 如果你正在开发新项目或可以进行重构，强烈建议迁移到 Resilience4j -  包含断路器、限流等
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j'
+    // 或者使用Sentinel
+    implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-sentinel'
+    // Sentinel Dashboard 通信
+    implementation 'com.alibaba.csp:sentinel-transport-simple-http:1.8.6'
+
+    // 测试依赖
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.kafka:spring-kafka-test'
+    
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
