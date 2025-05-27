@@ -3,13 +3,16 @@ package com.test.travelplanner.controller;
 
 import com.test.travelplanner.model.dto.unifiedGlobalResponse.ApiResponse;
 import com.test.travelplanner.model.dto.user.LoginAuthResponse;
+import com.test.travelplanner.model.dto.user.PermissionResponse;
 import com.test.travelplanner.model.entity.user.UserEntity;
 import com.test.travelplanner.service.impl.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
 import com.test.travelplanner.model.RegisterRequest;
+import com.test.travelplanner.service.impl.PermissionService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -19,11 +22,13 @@ public class AuthenticationController {
 
 
    private final AuthenticationService authenticationService;
+    private final PermissionService permissionService;
 
 
-   public AuthenticationController(AuthenticationService authenticationService) {
+    public AuthenticationController(AuthenticationService authenticationService, PermissionService permissionService) {
        this.authenticationService = authenticationService;
-   }
+        this.permissionService = permissionService;
+    }
 
 
    @PostMapping("/register")
@@ -44,4 +49,16 @@ public class AuthenticationController {
        return ResponseEntity.status(HttpStatus.OK)
                .body(ApiResponse.success(authResponse));
    }
+
+    @GetMapping("/permissions")
+    public ResponseEntity<PermissionResponse> getPermissions(
+            @AuthenticationPrincipal UserEntity currentUser) {
+
+        PermissionResponse response = new PermissionResponse();
+        response.setMenus(permissionService.getUserMenus(currentUser.getId()));
+        response.setOperates(permissionService.getUserOperates(currentUser.getId()));
+
+        return ResponseEntity.ok(response);
+    }
+
 }
