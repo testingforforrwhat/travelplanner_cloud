@@ -5,6 +5,7 @@ import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
 import com.test.travelplanner.model.entity.trip.*;
 import com.test.travelplanner.model.entity.user.Menu;
+import com.test.travelplanner.model.entity.user.Permission;
 import com.test.travelplanner.model.entity.user.Role;
 import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class DevRunner implements ApplicationRunner {
     private final TripItineraryRepository tripItineraryRepository;
     private final MenuRepository menuRepository;
     private final RoleRepository roleRepository;
+    private final PermissionRepository permissionRepository;
 
 
     public DevRunner(
@@ -49,7 +51,8 @@ public class DevRunner implements ApplicationRunner {
             DestinationRepository destinationRepository, ProductRepository productRepository,
 
             TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository, TripActivityRepository tripActivityRepository, TripItineraryRepository tripItineraryRepository, MenuRepository menuRepository,
-            RoleRepository roleRepository) {
+            RoleRepository roleRepository,
+            PermissionRepository permissionRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
@@ -60,6 +63,7 @@ public class DevRunner implements ApplicationRunner {
         this.tripItineraryRepository = tripItineraryRepository;
         this.menuRepository = menuRepository;
         this.roleRepository = roleRepository;
+        this.permissionRepository = permissionRepository;
     }
 
 
@@ -138,6 +142,22 @@ public class DevRunner implements ApplicationRunner {
         Role role2 = new Role();
         role2.setRoleName("ROLE_USER");
         roleRepository.save( role2 );
+
+        // 创建权限
+        Permission sysSettingsPerm = new Permission();
+        sysSettingsPerm.setPermissionName("系统设置");
+        // sysSettingsPerm.setPid(null); // 如果有父权限ID，则设置
+        sysSettingsPerm = permissionRepository.save(sysSettingsPerm);
+
+        Permission menuManagePerm = new Permission();
+        menuManagePerm.setPermissionName("菜单管理");
+        // menuManagePerm.setPid(sysSettingsPerm.getPermissionId()); // 示例：设为系统设置的子权限
+        menuManagePerm = permissionRepository.save(menuManagePerm);
+
+        Permission opManagePerm = new Permission();
+        opManagePerm.setPermissionName("操作管理");
+        // opManagePerm.setPid(sysSettingsPerm.getPermissionId()); // 示例：设为系统设置的子权限
+        opManagePerm = permissionRepository.save(opManagePerm);
 
         Menu menu = new Menu();
         menu.setMenuName("StockDashboard");
