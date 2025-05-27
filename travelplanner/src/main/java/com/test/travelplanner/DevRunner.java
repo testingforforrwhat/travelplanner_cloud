@@ -4,9 +4,7 @@ package com.test.travelplanner;
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
 import com.test.travelplanner.model.entity.trip.*;
-import com.test.travelplanner.model.entity.user.Menu;
-import com.test.travelplanner.model.entity.user.Permission;
-import com.test.travelplanner.model.entity.user.Role;
+import com.test.travelplanner.model.entity.user.*;
 import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +42,8 @@ public class DevRunner implements ApplicationRunner {
     private final MenuRepository menuRepository;
     private final RoleRepository roleRepository;
     private final PermissionRepository permissionRepository;
+    private final RolePermissionRepository rolePermissionRepository;
+    private final PermissionMenuRepository permissionMenuRepository;
 
 
     public DevRunner(
@@ -52,7 +52,9 @@ public class DevRunner implements ApplicationRunner {
 
             TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository, TripActivityRepository tripActivityRepository, TripItineraryRepository tripItineraryRepository, MenuRepository menuRepository,
             RoleRepository roleRepository,
-            PermissionRepository permissionRepository) {
+            PermissionRepository permissionRepository,
+            RolePermissionRepository rolePermissionRepository,
+            PermissionMenuRepository permissionMenuRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
@@ -64,6 +66,8 @@ public class DevRunner implements ApplicationRunner {
         this.menuRepository = menuRepository;
         this.roleRepository = roleRepository;
         this.permissionRepository = permissionRepository;
+        this.rolePermissionRepository = rolePermissionRepository;
+        this.permissionMenuRepository = permissionMenuRepository;
     }
 
 
@@ -147,26 +151,63 @@ public class DevRunner implements ApplicationRunner {
         Permission sysSettingsPerm = new Permission();
         sysSettingsPerm.setPermissionName("系统设置");
         // sysSettingsPerm.setPid(null); // 如果有父权限ID，则设置
+        sysSettingsPerm.setPid(1);
         sysSettingsPerm = permissionRepository.save(sysSettingsPerm);
 
         Permission menuManagePerm = new Permission();
         menuManagePerm.setPermissionName("菜单管理");
         // menuManagePerm.setPid(sysSettingsPerm.getPermissionId()); // 示例：设为系统设置的子权限
+        menuManagePerm.setPid(2);
         menuManagePerm = permissionRepository.save(menuManagePerm);
 
         Permission opManagePerm = new Permission();
         opManagePerm.setPermissionName("操作管理");
         // opManagePerm.setPid(sysSettingsPerm.getPermissionId()); // 示例：设为系统设置的子权限
+        opManagePerm.setPid(3);
         opManagePerm = permissionRepository.save(opManagePerm);
+
+        // 分配角色权限
+        RolePermission adminRoleSysPerm = new RolePermission();
+        adminRoleSysPerm.setRole(role);
+        adminRoleSysPerm.setPermission(sysSettingsPerm);
+        rolePermissionRepository.save(adminRoleSysPerm);
+
+        RolePermission adminRoleMenuPerm = new RolePermission();
+        adminRoleMenuPerm.setRole(role2);
+        adminRoleMenuPerm.setPermission(menuManagePerm);
+        rolePermissionRepository.save(adminRoleMenuPerm);
+
+        RolePermission adminRoleOpPerm = new RolePermission();
+        adminRoleOpPerm.setRole(role);
+        adminRoleOpPerm.setPermission(opManagePerm);
+        rolePermissionRepository.save(adminRoleOpPerm);
+
+        RolePermission normalUserMenuPerm = new RolePermission();
+        normalUserMenuPerm.setRole(role);
+        normalUserMenuPerm.setPermission(menuManagePerm);
+        rolePermissionRepository.save(normalUserMenuPerm);
 
         Menu menu = new Menu();
         menu.setMenuName("StockDashboard");
         menu.setMenuUrl("/stockDashboard");
+        menu.setPid(1);
         menuRepository.save( menu );
 
         Menu menu2 = new Menu();
         menu2.setMenuName("BlogComponent");
         menu2.setMenuUrl("/blog");
+        menu2.setPid(2);
         menuRepository.save( menu2 );
+
+        // 分配权限给菜单
+        PermissionMenu permMenuLink1 = new PermissionMenu();
+        permMenuLink1.setPermissionId(menuManagePerm.getPermissionId());
+        permMenuLink1.setMenuId(menu.getMenuId());
+        permissionMenuRepository.save(permMenuLink1);
+
+        PermissionMenu permMenuLink2 = new PermissionMenu();
+        permMenuLink2.setPermissionId(menuManagePerm.getPermissionId()); // 假设菜单管理权限也能看用户管理菜单
+        permMenuLink2.setMenuId(menu2.getMenuId());
+        permissionMenuRepository.save(permMenuLink2);
     }
 }

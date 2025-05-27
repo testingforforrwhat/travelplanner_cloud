@@ -20,5 +20,5 @@ public interface OperateRepository extends JpaRepository<Operate, Integer> {
         WHERE r.role_name = :userRole
         ORDER BY o.operate_id
         """, nativeQuery = true)
-    Optional<List<Operate>> findOperatesByPermissionId(UserRole userRole);
+    Optional<List<Operate>> findOperatesByPermissionId(String userRole);
 }

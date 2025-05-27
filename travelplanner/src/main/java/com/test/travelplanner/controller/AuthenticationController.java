@@ -10,12 +10,14 @@ import com.test.travelplanner.model.LoginRequest;
 import com.test.travelplanner.model.RegisterRequest;
 import com.test.travelplanner.service.impl.PermissionService;
 import io.swagger.v3.oas.annotations.Operation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 
+@Slf4j
 @RestController
 @RequestMapping("/auth")
 public class AuthenticationController {
@@ -55,8 +57,11 @@ public class AuthenticationController {
             @AuthenticationPrincipal UserEntity currentUser) {
 
         PermissionResponse response = new PermissionResponse();
-        response.setMenus(permissionService.getUserMenus(currentUser.getUserRoles()));
-        response.setOperates(permissionService.getUserOperates(currentUser.getUserRoles()));
+
+        log.info("========================> currentUser.getUserRoles(): {}", currentUser.getRole());
+        log.info("========================> permissionService.getUserMenus(currentUser.getUserRoles()): {}", permissionService.getUserMenus(String.valueOf(currentUser.getRole())));
+        response.setMenus(permissionService.getUserMenus(String.valueOf(currentUser.getRole())));
+        response.setOperates(permissionService.getUserOperates(String.valueOf(currentUser.getRole())));
 
         return ResponseEntity.ok(ApiResponse.success(response));
     }

@@ -6,12 +6,14 @@ import com.test.travelplanner.model.entity.user.Menu;
 import com.test.travelplanner.model.entity.user.UserRole;
 import com.test.travelplanner.repository.MenuRepository;
 import com.test.travelplanner.repository.OperateRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 public class PermissionService {
 
@@ -24,13 +26,16 @@ public class PermissionService {
         this.operateRepository = operateRepository;
     }
 
-    @Cacheable(value = "userMenus", key = "#userRole")
-    public Optional<List<Menu>> getUserMenus(UserRole userRole) {
+    // @Cacheable(value = "userMenus", key = "#userRole")
+    public Optional<List<Menu>> getUserMenus(String userRole) {
+
+        log.info("=================> getUserMenus: {}", menuRepository.findMenusByPermissionId(userRole));
+
         return menuRepository.findMenusByPermissionId(userRole);
     }
     
-    @Cacheable(value = "userOperates", key = "#userRole")
-    public Optional<List<Operate>> getUserOperates(UserRole userRole) {
+    // @Cacheable(value = "userOperates", key = "#userRole")
+    public Optional<List<Operate>> getUserOperates(String userRole) {
         return operateRepository.findOperatesByPermissionId(userRole);
     }
 }
