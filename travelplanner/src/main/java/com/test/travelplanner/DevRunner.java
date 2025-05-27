@@ -4,6 +4,8 @@ package com.test.travelplanner;
 import com.test.travelplanner.model.entity.DestinationEntity;
 import com.test.travelplanner.model.entity.Product;
 import com.test.travelplanner.model.entity.trip.*;
+import com.test.travelplanner.model.entity.user.Menu;
+import com.test.travelplanner.model.entity.user.Role;
 import com.test.travelplanner.repository.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,13 +40,16 @@ public class DevRunner implements ApplicationRunner {
     private final TripHighlightRepository tripHighlightRepository;
     private final TripActivityRepository tripActivityRepository;
     private final TripItineraryRepository tripItineraryRepository;
+    private final MenuRepository menuRepository;
+    private final RoleRepository roleRepository;
 
 
     public DevRunner(
 
             DestinationRepository destinationRepository, ProductRepository productRepository,
 
-            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository, TripActivityRepository tripActivityRepository, TripItineraryRepository tripItineraryRepository) {
+            TripRepository tripRepository, TripOverviewRepository tripOverviewRepository, TripHighlightRepository tripHighlightRepository, TripActivityRepository tripActivityRepository, TripItineraryRepository tripItineraryRepository, MenuRepository menuRepository,
+            RoleRepository roleRepository) {
 
         this.destinationRepository = destinationRepository;
         this.productRepository = productRepository;
@@ -53,6 +58,8 @@ public class DevRunner implements ApplicationRunner {
         this.tripHighlightRepository = tripHighlightRepository;
         this.tripActivityRepository = tripActivityRepository;
         this.tripItineraryRepository = tripItineraryRepository;
+        this.menuRepository = menuRepository;
+        this.roleRepository = roleRepository;
     }
 
 
@@ -124,6 +131,22 @@ public class DevRunner implements ApplicationRunner {
         tripActivity.setDescription("LAX机场接机，入住酒店");
         tripActivityRepository.save( tripActivity );
 
+        Role role = new Role();
+        role.setRoleName("ROLE_ADMIN");
+        roleRepository.save( role );
 
+        Role role2 = new Role();
+        role2.setRoleName("ROLE_USER");
+        roleRepository.save( role2 );
+
+        Menu menu = new Menu();
+        menu.setMenuName("StockDashboard");
+        menu.setMenuUrl("/stockDashboard");
+        menuRepository.save( menu );
+
+        Menu menu2 = new Menu();
+        menu2.setMenuName("BlogComponent");
+        menu2.setMenuUrl("/blog");
+        menuRepository.save( menu2 );
     }
 }
