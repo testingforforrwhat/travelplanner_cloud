@@ -1,4 +1,4 @@
-package com.test.travelplanner.service.impl;
+package com.test.travelplanner.repository;
 
 import com.test.travelplanner.model.entity.user.Operate;
 import com.test.travelplanner.model.entity.user.UserRole;

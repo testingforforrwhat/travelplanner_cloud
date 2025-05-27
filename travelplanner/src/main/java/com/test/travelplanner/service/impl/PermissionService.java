@@ -4,6 +4,8 @@ package com.test.travelplanner.service.impl;
 import com.test.travelplanner.model.entity.user.Operate;
 import com.test.travelplanner.model.entity.user.Menu;
 import com.test.travelplanner.model.entity.user.UserRole;
+import com.test.travelplanner.repository.MenuRepository;
+import com.test.travelplanner.repository.OperateRepository;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
