@@ -41,8 +41,6 @@ public class UserEntity implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
-    @Setter
-    @Getter
     @Size(max = 100)
     @NotNull
     @Column(name = "email")
@@ -51,14 +49,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "phone", unique = true, length = 20)
     private String phone;
 
-    @Setter
-    @Getter
     @Size(max = 255)
     @Column(name = "avatar_url")
     private String avatarUrl;
 
-    @Setter
-    @Getter
     @ColumnDefault("true")
     @Column(name = "is_active")
     private Boolean isActive;
@@ -67,14 +61,10 @@ public class UserEntity implements UserDetails {
     @Column(name = "status", nullable = false)
     private UserStatus status = UserStatus.ACTIVE;
 
-    @Setter
-    @Getter
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private OffsetDateTime createdAt;
 
-    @Setter
-    @Getter
     @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "updated_at")
     private OffsetDateTime updatedAt;
@@ -96,14 +86,6 @@ public class UserEntity implements UserDetails {
     private UserDetail userDetail;
 
     public UserEntity() {
-    }
-
-
-    public UserEntity(Long id, String username, String password_hash, UserRole role) {
-        this.id = id;
-        this.username = username;
-        this.password_hash = password_hash;
-        this.role = role;
     }
 
     public UserEntity(Long id, String username, String password_hash, UserRole role, String email) {
@@ -131,7 +113,5 @@ public class UserEntity implements UserDetails {
     public String getUsername() {
         return username;
     }
-
-
 
 }
