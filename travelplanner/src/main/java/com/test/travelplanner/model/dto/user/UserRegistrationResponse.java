@@ -1,6 +1,6 @@
 package com.test.travelplanner.model.dto.user;
 
-import com.test.travelplanner.model.entity.UserRole;
+import com.test.travelplanner.model.entity.user.UserRole;
 import lombok.Data;
 
 @Data  

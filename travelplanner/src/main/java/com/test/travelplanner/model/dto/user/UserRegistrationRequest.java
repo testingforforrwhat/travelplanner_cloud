@@ -3,7 +3,7 @@ package com.test.travelplanner.model.dto.user;
 
 import com.test.travelplanner.model.dto.valid.StrongPassword;
 import com.test.travelplanner.model.dto.valid.ValidPhone;
-import com.test.travelplanner.model.entity.UserRole;
+import com.test.travelplanner.model.entity.user.UserRole;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;

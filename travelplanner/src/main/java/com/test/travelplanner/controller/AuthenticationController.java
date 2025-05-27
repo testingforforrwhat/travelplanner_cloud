@@ -3,10 +3,9 @@ package com.test.travelplanner.controller;
 
 import com.test.travelplanner.model.dto.unifiedGlobalResponse.ApiResponse;
 import com.test.travelplanner.model.dto.user.LoginAuthResponse;
-import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.user.UserEntity;
 import com.test.travelplanner.service.impl.AuthenticationService;
 import com.test.travelplanner.model.LoginRequest;
-import com.test.travelplanner.model.LoginResponse;
 import com.test.travelplanner.model.RegisterRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;

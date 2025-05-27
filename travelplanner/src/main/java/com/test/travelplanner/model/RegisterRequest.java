@@ -1,7 +1,7 @@
 package com.test.travelplanner.model;
 
 
-import com.test.travelplanner.model.entity.UserRole;
+import com.test.travelplanner.model.entity.user.UserRole;
 
 public record RegisterRequest(
        String username,

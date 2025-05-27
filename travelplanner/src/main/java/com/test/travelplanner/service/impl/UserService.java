@@ -1,7 +1,7 @@
 package com.test.travelplanner.service.impl;
 
 
-import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.user.UserEntity;
 import com.test.travelplanner.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

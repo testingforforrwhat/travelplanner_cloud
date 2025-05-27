@@ -1,7 +1,7 @@
 package com.test.travelplanner.repository;
 
 
-import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

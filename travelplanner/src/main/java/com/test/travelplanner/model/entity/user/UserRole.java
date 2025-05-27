@@ -1,4 +1,4 @@
-package com.test.travelplanner.model.entity;
+package com.test.travelplanner.model.entity.user;
 
 
 public enum UserRole {

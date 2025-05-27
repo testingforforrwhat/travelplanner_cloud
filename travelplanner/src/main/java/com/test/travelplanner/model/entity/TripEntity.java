@@ -1,5 +1,6 @@
 package com.test.travelplanner.model.entity;
 
+import com.test.travelplanner.model.entity.user.UserEntity;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;

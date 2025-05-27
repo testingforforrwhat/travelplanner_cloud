@@ -1,12 +1,11 @@
 package com.test.travelplanner.service.impl;
 
 
-import com.alibaba.fastjson2.JSON;
 import com.test.travelplanner.authentication.UserAlreadyExistException;
 import com.test.travelplanner.model.dto.user.LoginAuthResponse;
 import com.test.travelplanner.model.dto.user.UserDTO;
-import com.test.travelplanner.model.entity.UserEntity;
-import com.test.travelplanner.model.entity.UserRole;
+import com.test.travelplanner.model.entity.user.UserEntity;
+import com.test.travelplanner.model.entity.user.UserRole;
 import com.test.travelplanner.redis.RedisUtil;
 import com.test.travelplanner.repository.UserRepository;
 import com.test.travelplanner.security.JwtHandler;

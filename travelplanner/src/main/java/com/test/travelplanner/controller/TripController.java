@@ -5,7 +5,7 @@ import com.test.travelplanner.annotation.RedisCache;
 import com.test.travelplanner.model.dto.TripDto;
 import com.test.travelplanner.model.TripRequest;
 import com.test.travelplanner.model.dto.unifiedGlobalResponse.ApiResponse;
-import com.test.travelplanner.model.entity.UserEntity;
+import com.test.travelplanner.model.entity.user.UserEntity;
 import com.test.travelplanner.model.entity.trip.Trip;
 import com.test.travelplanner.service.impl.TripService;
 import io.swagger.v3.oas.annotations.Operation;
