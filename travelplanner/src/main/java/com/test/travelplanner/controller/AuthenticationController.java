@@ -55,8 +55,8 @@ public class AuthenticationController {
             @AuthenticationPrincipal UserEntity currentUser) {
 
         PermissionResponse response = new PermissionResponse();
-        response.setMenus(permissionService.getUserMenus(currentUser.getId()));
-        response.setOperates(permissionService.getUserOperates(currentUser.getId()));
+        response.setMenus(permissionService.getUserMenus(currentUser.getUserRoles()));
+        response.setOperates(permissionService.getUserOperates(currentUser.getUserRoles()));
 
         return ResponseEntity.ok(response);
     }

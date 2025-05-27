@@ -4,14 +4,15 @@ import com.test.travelplanner.model.entity.user.Menu;
 import com.test.travelplanner.model.entity.user.Operate;
 
 import java.util.List;
+import java.util.Optional;
 
 public class PermissionResponse {
-    private List<Menu> menus;
-    private List<Operate> operates;
+    private Optional<List<Menu>> menus;
+    private Optional<List<Operate>> operates;
     
     // getter、setter
-    public List<Menu> getMenus() { return menus; }
-    public void setMenus(List<Menu> menus) { this.menus = menus; }
-    public List<Operate> getOperates() { return operates; }
-    public void setOperates(List<Operate> operates) { this.operates = operates; }
+    public Optional<List<Menu>> getMenus() { return menus; }
+    public void setMenus(Optional<List<Menu>> menus) { this.menus = menus; }
+    public Optional<List<Operate>> getOperates() { return operates; }
+    public void setOperates(Optional<List<Operate>> operates) { this.operates = operates; }
 }
