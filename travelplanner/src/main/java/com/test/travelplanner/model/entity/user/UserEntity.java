@@ -4,6 +4,7 @@ package com.test.travelplanner.model.entity.user;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -24,6 +25,7 @@ import java.util.Objects;
  */
 @Entity
 @Table(name = "users")
+@Data
 public class UserEntity implements UserDetails {
     @Getter
     @Id
@@ -33,7 +35,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "username", unique = true, nullable = false, length = 50)
     private String username;
 
-    @Column(name = "password_hash", nullable = false, length = 255)
     private String password_hash;
 
     @Getter
@@ -84,7 +85,7 @@ public class UserEntity implements UserDetails {
     @Column(name = "login_count", nullable = false)
     private Integer loginCount = 0;
 
-    @Column(name = "registration_time", nullable = false)
+    // @Column(name = "registration_time", nullable = false)
     private LocalDateTime registrationTime;
 
     @Column(name = "registration_ip", length = 45)
@@ -132,28 +133,5 @@ public class UserEntity implements UserDetails {
     }
 
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        UserEntity that = (UserEntity) o;
-        return Objects.equals(id, that.id) && Objects.equals(username, that.username) && Objects.equals(password_hash, that.password_hash) && role == that.role;
-    }
 
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password_hash, role);
-    }
-
-
-    @Override
-    public String toString() {
-        return "UserEntity{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password_hash + '\'' +
-                ", role=" + role +
-                '}';
-    }
 }

@@ -68,6 +68,9 @@ public class AuthenticationService {
        userDTO.setUserId(userEntity.getId());
        userDTO.setName(userEntity.getUsername());
        userDTO.setEmail(userEntity.getEmail());
+       userDTO.setLoginCount(userEntity.getLoginCount() + 1);
+       userEntity.setLoginCount(userEntity.getLoginCount() + 1);
+       userRepository.save(userEntity);
 
        // ( spring cloud ) 签发的令牌，存入Redis中。拼接上Authorization的策略（Bearer Token）前缀。
        redisUtil.set( "Bearer " + token , userDTO , 60 * 24 );

@@ -7,5 +7,6 @@ public class UserDTO {
     private Long userId;  
     private String name;  
     private String email;  
-    private String phone;  
+    private String phone;
+    private Integer loginCount;
 }  
