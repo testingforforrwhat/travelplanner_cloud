@@ -85,6 +85,9 @@ public class UserEntity implements UserDetails {
     @OneToOne(mappedBy = "userEntity", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private UserDetail userDetail;
 
+    @Enumerated(EnumType.STRING)
+    private UserRole userRoles;
+    
     public UserEntity() {
     }
 
