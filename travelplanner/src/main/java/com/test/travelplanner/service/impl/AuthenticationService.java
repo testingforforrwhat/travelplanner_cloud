@@ -63,6 +63,7 @@ public class AuthenticationService {
        authResponse.setToken(jwtHandler.generateToken(username));
 
        UserEntity userEntity = userRepository.findByUsername(username);
+       authResponse.setRole(userEntity.getRole());
 
        UserDTO userDTO = new UserDTO();
        userDTO.setUserId(userEntity.getId());
