@@ -7,7 +7,7 @@ import com.test.travelplanner.model.dto.user.UserDTO;
 import com.test.travelplanner.model.entity.user.UserEntity;
 import com.test.travelplanner.model.entity.user.UserRole;
 import com.test.travelplanner.redis.RedisUtil;
-import com.test.travelplanner.repository.UserRepository;
+import com.test.travelplanner.repository.UserEntityRepository;
 import com.test.travelplanner.security.JwtHandler;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -22,7 +22,7 @@ public class AuthenticationService {
    private final AuthenticationManager authenticationManager;
    private final JwtHandler jwtHandler;
    private final PasswordEncoder passwordEncoder;
-   private final UserRepository userRepository;
+   private final UserEntityRepository userRepository;
     private final RedisUtil redisUtil;
 
 
@@ -30,7 +30,7 @@ public class AuthenticationService {
            AuthenticationManager authenticationManager,
            JwtHandler jwtHandler,
            PasswordEncoder passwordEncoder,
-           UserRepository userRepository,
+           UserEntityRepository userRepository,
            RedisUtil redisUtil) {
        this.authenticationManager = authenticationManager;
        this.jwtHandler = jwtHandler;

@@ -2,14 +2,14 @@ package com.test.travelplanner.service.impl;
 
 
 import com.test.travelplanner.model.entity.user.UserEntity;
-import com.test.travelplanner.repository.UserRepository;
+import com.test.travelplanner.repository.UserEntityRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
+    private final UserEntityRepository userRepository;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserEntityRepository userRepository) {
         this.userRepository = userRepository;
     }
 
