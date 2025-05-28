@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -72,6 +73,7 @@ public class DevRunner implements ApplicationRunner {
 
 
     @Override
+    @Transactional // 建议在事务中执行，确保数据一致性
     public void run(ApplicationArguments args) {
         generateSampleData();
 
