@@ -75,6 +75,9 @@ public class DevRunner implements ApplicationRunner {
     @Override
     @Transactional // 建议在事务中执行，确保数据一致性
     public void run(ApplicationArguments args) {
+
+        logger.info("开始添加开发环境测试数据...");
+
         generateSampleData();
 
         List<DestinationEntity> destinationEntity = destinationRepository.findAll();
