@@ -60,6 +60,7 @@ services:
 
   db:
     image: ghcr.io/baosystems/postgis:latest
+    restart: always
     environment:
       POSTGRES_DB: postgres
       POSTGRES_PASSWORD: secret
